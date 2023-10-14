@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import sitemanagerController from "./controllers/sitemanger/sitemanger.js";
+import staffController from "./controllers/staff/staff.js";
 
 const app = express();
 
@@ -39,7 +41,8 @@ mongoose.connection.on("error", (err) => {
 });
 
 // Routes
-
+app.use("/api/sitemanager", sitemanagerController);
+app.use("/api/staff", staffController);
 
 app.listen(PORT, () => {
   console.log("Connected to Backend");

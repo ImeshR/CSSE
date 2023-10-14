@@ -25,7 +25,7 @@ const Createdrawer = ({ visible, onClose }) => {
         </div>
       }
     >
-     <CreateForm />
+     <CreateForm onClose={onClose}/>
     </Drawer>
   );
 };

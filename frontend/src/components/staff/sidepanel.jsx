@@ -14,19 +14,19 @@ const SidePanel = () => {
       key: "1",
       icon: <HomeOutlined />,
       label: "Home",
-      link: "/site/manager",
+      link: "/staff-manager",
     },
     {
       key: "2",
       icon: <PartitionOutlined />,
       label: "pending orders",
-      link: "/site/manager/pending-order",
+      link: "/staff-manager/pending-order",
     },
     {
       key: "3",
       icon: <SettingOutlined />,
       label: "Accepted Orders",
-      link: "/site/manager/accepted-order",
+      link: "#",
     },
     {
       key: "4",
@@ -40,7 +40,7 @@ const SidePanel = () => {
     <div className="h-screen py-2 pl-2 w-[400px]">
       <div className="w-full h-full bg-[#001529] rounded-md py-2 flex flex-col justify-between">
         <div className="w-full flex flex-col">
-          <div className="w-full text-white text-xl px-2 ">Hi Manager!</div>
+          <div className="w-full text-white text-xl px-2 ">Hi Staff Manager!</div>
           <div className="w-full pt-10  flex justify-center">
             <Menu
               defaultSelectedKeys={["1"]}

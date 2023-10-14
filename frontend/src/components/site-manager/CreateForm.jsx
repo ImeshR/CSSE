@@ -1,15 +1,32 @@
-import React, { useState } from "react";
-import { Button, Form, Input, DatePicker, Select, Divider } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Divider,
+  message,
+} from "antd";
+import axios from "axios";
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
-const CreateForm = () => {
+const CreateForm = ({ onClose }) => {
   const [items, setItems] = useState([{ itemName: "", quantity: "" }]);
+  const [suppliers, setSuppliers] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of suppliers from your backend API
+    axios
+      .get("http://localhost:5000/api/sitemanager/get-suppliers")
+      .then((response) => {
+        // Set the list of suppliers in state
+        setSuppliers(response.data);
+      })
+      .catch((error) => {
+        // Handle errors if needed
+        console.error("Error fetching suppliers:", error);
+      });
+  }, []);
 
   const addItem = () => {
     setItems([...items, { itemName: "", quantity: "" }]);
@@ -22,14 +39,37 @@ const CreateForm = () => {
   };
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    // You can access the items and quantities from the 'items' state here.
-    console.log("Items:", items);
+    // Create an order object with the form values
+    const order = {
+      managername: values.managername,
+      email: values.email,
+      contact: values.contact,
+      siteaddress: values.siteaddress,
+      sitename: values.sitename,
+      deadline: values.deadline.format("YYYY-MM-DD"),
+      suppliers: values.suppliers,
+      items: items,
+    };
+
+    // Send a POST request to your backend API
+    axios
+      .post("http://localhost:5000/api/sitemanager/create-order", order)
+      .then((response) => {
+        // Display a success message
+        message.success("Order successfully created!");
+        onClose();
+      })
+      .catch((error) => {
+        // Handle errors and display an error message if needed.
+        console.error("Error creating order:", error);
+        message.error("Error creating the order.");
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div className="">
       <Form
@@ -44,16 +84,25 @@ const CreateForm = () => {
         style={{
           maxWidth: 1000,
         }}
-        initialValues={{
-          remember: true,
-        }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
-          label="name"
-          name="name"
+          label="Site name"
+          name="sitename"
+          rules={[
+            {
+              required: true,
+              message: "Please input your site name!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Sitemanager name"
+          name="managername"
           rules={[
             {
               required: true,
@@ -64,48 +113,44 @@ const CreateForm = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="email"
+          label="Sitemanager email"
           name="email"
           rules={[
             {
               required: true,
               message: "Please input your manager email!",
             },
+            {
+              type: "email",
+              message: "Please enter a valid email address",
+            },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="contact"
+          label="Contact"
           name="contact"
           rules={[
             {
               required: true,
               message: "Please input your manager contact!",
             },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="address"
-          name="address"
-          rules={[
             {
-              required: true,
-              message: "Please input your site address!",
+              pattern: /^[0-9]+$/,
+              message: "Please enter a valid phone number",
             },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="site name"
-          name="site name"
+          label="Address"
+          name="siteaddress"
           rules={[
             {
               required: true,
-              message: "Please input your site name!",
+              message: "Please input your site address!",
             },
           ]}
         >
@@ -125,16 +170,20 @@ const CreateForm = () => {
         </Form.Item>
         <Form.Item
           label="Suppliers"
-          name="supplier"
+          name="suppliers"
           rules={[
             {
               required: true,
-              message: "Please input at least one supplier!",
+              message: "Please select at least one supplier!",
             },
           ]}
         >
           <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+            {suppliers.map((supplier) => (
+              <Select.Option key={supplier._id} value={supplier._id}>
+                {supplier.suppliername}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
         {items.map((item, index) => (
@@ -144,7 +193,7 @@ const CreateForm = () => {
               <div className="w-1/2 flex justify-start items-center shrink-0">
                 <Form.Item
                   label={`Item Name ${index + 1}`}
-                  name={`itemname[${index}]`}
+                  name={`items[${index}].itemName`}
                   rules={[
                     {
                       required: true,
@@ -163,12 +212,16 @@ const CreateForm = () => {
               </div>
               <div className="w-1/2 flex justify-start items-center shrink-0">
                 <Form.Item
-                  label={`Quantity`}
-                  name={`quantity[${index}]`}
+                  label={`Quantity ${index + 1}`}
+                  name={`items[${index}].quantity`}
                   rules={[
                     {
                       required: true,
                       message: "Please input the quantity!",
+                    },
+                    {
+                      pattern: /^[0-9]+$/,
+                      message: "Please enter a valid quantity",
                     },
                   ]}
                   className="w-full"
@@ -182,7 +235,6 @@ const CreateForm = () => {
                 </Form.Item>
               </div>
             </div>
-
             <Divider />
           </div>
         ))}
@@ -193,7 +245,6 @@ const CreateForm = () => {
         >
           Add Item
         </Button>
-
         <Form.Item
           wrapperCol={{
             offset: 8,

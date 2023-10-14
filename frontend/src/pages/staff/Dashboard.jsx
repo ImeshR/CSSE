@@ -19,19 +19,9 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className="top-0 px-8 right-0 bottom-0 flex grow flex-col border gap-5">
-        <div className="w-full border px-8 py-4 flex flex-row justify-end">
-          <Button
-            type="primary"
-            style={{ background: "#296F9D", width: 200, height: 50 }}
-            className="text-lg flex justify-center items-center"
-            onClick={showDrawer}
-          >
-            <PlusOutlined />
-            Create New Order
-          </Button>
+        <div className="w-full border px-8 py-4 flex ">
+          under development
         </div>
-        <Createdrawer visible={drawerVisible} onClose={closeDrawer} />
-        <OrderTable />
       </div>
     </Layout>
   );
