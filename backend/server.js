@@ -7,38 +7,53 @@ import cookieParser from "cookie-parser";
 import sitemanagerController from "./controllers/sitemanger/sitemanger.js";
 import staffController from "./controllers/staff/staff.js";
 
-const app = express();
+class DatabaseConnection {
+  constructor() {
+    this.connected = false;
+    this.connect();
+  }
 
+  connect() {
+    if (this.connected) {
+      return;
+    }
+
+    const URL = process.env.MONGODB_URI;
+
+    mongoose.connect(URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    const connection = mongoose.connection;
+
+    connection.once("open", () => {
+      console.log("Mongodb Connection success!");
+      this.connected = true;
+    });
+
+    connection.on("disconnected", () => {
+      console.log("Mongodb disconnected!");
+    });
+
+    connection.on("error", (err) => {
+      console.error("Mongodb connection error:", err);
+    });
+  }
+}
+
+const app = express();
 app.use(cors());
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 
-const URL = process.env.MONGODB_URI;
+// Singleton instance of the database connection
+const dbConnection = new DatabaseConnection();
 
 // Middleware
 app.use(cookieParser());
 app.use(express.json());
-
-// Connect to MongoDB
-mongoose.connect(URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const connection = mongoose.connection;
-
-connection.once("open", () => {
-  console.log("Mongodb Connection success!");
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("Mongodb disconnected!");
-});
-
-mongoose.connection.on("error", (err) => {
-  console.error("Mongodb connection error:", err);
-});
 
 // Routes
 app.use("/api/sitemanager", sitemanagerController);

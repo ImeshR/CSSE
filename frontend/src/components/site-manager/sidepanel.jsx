@@ -13,7 +13,7 @@ const SidePanel = () => {
     {
       key: "1",
       icon: <HomeOutlined />,
-      label: "Home",
+      label: "Orders",
       link: "/site/manager",
     },
     {
