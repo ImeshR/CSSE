@@ -1,4 +1,5 @@
 import StaffPendingOrder from "../../models/staff/PendingOrder.js";
+import Employee from "../../models/Employee/Employee.js"
 
 export const createOrder = async (req, res) => {
     const pendingorder = {
@@ -23,3 +24,22 @@ export const createOrder = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+//add new employee
+export const addEmployee = async (req, res) => {
+  const employee = {
+    name: req.body.name,
+    email: req.body.email,
+    mobileNo: req.body.mobileNo,
+    position: req.body.position,
+    age: req.body.age,
+    salary: req.body.salary,
+  };
+  const newEmployee = new Employee(employee);
+  try {
+    await newEmployee.save();
+    res.status(201).json(newEmployee);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+}

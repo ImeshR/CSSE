@@ -7,6 +7,7 @@ import PendinOrder from "./pages/site-manager/PendinOrder";
 import AcceptedOrders from "./pages/site-manager/AcceptedOrders";
 import StaffDashBoard from "./pages/staff/Dashboard";
 import StaffPendingOrder from "./pages/staff/PendingOrders";
+import ManageEmployee from "./pages/staff/ManageEmployee";
 
 export default function App() {
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/site/manager/accepted-order" element={<AcceptedOrders />} />
 
         <Route path="/staff-manager" element={<StaffDashBoard />} />
+        <Route path="/staff-manager/employee-manage" element={<ManageEmployee />} />
         <Route path="/staff-manager/pending-order" element={<StaffPendingOrder />} />
       </Routes>
     </BrowserRouter>
