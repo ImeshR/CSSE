@@ -19,20 +19,20 @@ const SidePanel = () => {
     {
       key: "2",
       icon: <SettingOutlined />,
-      label: "Add Employee",
+      label: "Employee",
       link: "/staff-manager/employee-manage",
     },
     {
       key: "3",
       icon: <PartitionOutlined />,
-      label: "pending orders",
-      link: "/staff-manager/pending-order",
+      label: "Working Sites",
+      link: "/staff-manager/working-sites",
     },
     {
       key: "4",
       icon: <SettingOutlined />,
-      label: "Accepted Orders",
-      link: "#",
+      label: "Orders Review",
+      link: "/staff-manager/orders-review",
     },
     {
       key: "5",

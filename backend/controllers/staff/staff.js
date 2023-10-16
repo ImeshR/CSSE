@@ -1,5 +1,12 @@
 import express from "express";
-import { createOrder, addEmployee } from "../../services/staff/staff.js";
+import {
+  createOrder,
+  addEmployee,
+  getEmployee,
+  deleteEmployee,
+  createSite,
+  getSite
+} from "../../services/staff/staff.js";
 
 const router = express.Router();
 
@@ -8,5 +15,17 @@ router.post("/create-order", createOrder);
 
 //add nw employee
 router.post("/add-employee", addEmployee);
+
+//get all employees
+router.get("/get-employeee", getEmployee);
+
+//delete employee
+router.delete("/delete-employee/:id", deleteEmployee);
+
+//create new site
+router.post("/create-site", createSite);
+
+//get all sites
+router.get("/get-site", getSite);
 
 export default router;

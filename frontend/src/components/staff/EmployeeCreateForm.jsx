@@ -1,62 +1,41 @@
-import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Form,
-  Input,
-  DatePicker,
-  Select,
-  Divider,
-  message,
-} from "antd";
+import React from "react";
+import { Button, Form, Input, Select, message } from "antd";
 import axios from "axios";
 
 const EmployeeCreateForm = ({ onClose }) => {
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/staff/add-employee",
+        values
+      );
+      if (response.status === 200) {
+        message.success("Employee successfully created");
+        onClose(); 
+      } else {
+        message.error("Failed to create employee");
+      }
+    } catch (error) {
+      console.error("Error creating employee:", error);
+      message.error("Failed to create employee");
+    }
   };
 
-  const onFinish = (values) => {
-    console.log(values);
-  };
   return (
-    <div className="">
-      <Form
-        name="basic"
-        layout="vertical"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 1000,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
+    <div>
+      <Form name="basic" layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Employee name"
           name="name"
-          rules={[
-            {
-              required: true,
-              message: "Please input employee name!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please input employee name!" }]}
         >
           <Input className="h-12" />
         </Form.Item>
         <Form.Item
           label="Employee email"
           name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input employee email!",
-            },
-          ]}
+          type="email"
+          rules={[{ required: true, message: "Please input employee email!" }]}
         >
           <Input className="h-12" />
         </Form.Item>
@@ -64,10 +43,7 @@ const EmployeeCreateForm = ({ onClose }) => {
           label="Employee mobile"
           name="mobileNo"
           rules={[
-            {
-              required: true,
-              message: "Please input employee mobile number!",
-            },
+            { required: true, message: "Please input employee mobile number!" },
           ]}
         >
           <Input className="h-12" />
@@ -76,10 +52,7 @@ const EmployeeCreateForm = ({ onClose }) => {
           label="Employee position"
           name="position"
           rules={[
-            {
-              required: true,
-              message: "Please input employee position!",
-            },
+            { required: true, message: "Please input employee position!" },
           ]}
         >
           <Select className="h-12">
@@ -91,29 +64,17 @@ const EmployeeCreateForm = ({ onClose }) => {
         <Form.Item
           label="Employee age"
           name="age"
-          rules={[
-            {
-              required: true,
-              message: "Please input employee age!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please input employee age!" }]}
         >
           <Input className="h-12" />
         </Form.Item>
-        {/* employee salary */}
         <Form.Item
           label="Employee salary"
           name="salary"
-          rules={[
-            {
-              required: true,
-              message: "Please input employee salary!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please input employee salary!" }]}
         >
           <Input className="h-12" />
         </Form.Item>
-
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -124,9 +85,9 @@ const EmployeeCreateForm = ({ onClose }) => {
             type="primary"
             htmlType="submit"
             style={{ background: "#296F9D", width: 150, height: 50 }}
-            className="text-lg"
+            className="text-base"
           >
-            Submit
+            Create Employee
           </Button>
         </Form.Item>
       </Form>

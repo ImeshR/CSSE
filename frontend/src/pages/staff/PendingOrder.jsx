@@ -1,15 +1,14 @@
 import React from 'react'
 import Layout from './layout'
-import PendingOrderTable from '../../components/staff/PendingOrderTable'
 
-const PendingOrders = () => {
+const PendingOrder = () => {
   return (
     <Layout>
       <div className="top-0 px-8 right-0 bottom-0 flex grow flex-col border gap-5">
-        <PendingOrderTable />
+        lets go
       </div>
     </Layout>
   )
 }
 
-export default PendingOrders
+export default PendingOrder
