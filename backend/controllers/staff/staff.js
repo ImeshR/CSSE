@@ -5,7 +5,10 @@ import {
   getEmployee,
   deleteEmployee,
   createSite,
-  getSite
+  getSite,
+  getPendingOrders,
+  updateOrderStatus,
+  deleteOrder
 } from "../../services/staff/staff.js";
 
 const router = express.Router();
@@ -27,5 +30,14 @@ router.post("/create-site", createSite);
 
 //get all sites
 router.get("/get-site", getSite);
+
+//ger pending orders
+router.get("/get-pending-orders", getPendingOrders);
+
+//update order status
+router.put("/update-order-status/:id", updateOrderStatus);
+
+//change order status in to declined
+router.put("/cancel-order/:id", deleteOrder);
 
 export default router;

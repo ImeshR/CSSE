@@ -21,8 +21,8 @@ const ManageEmployee = () => {
         <div className="w-full px-8 py-4 flex justify-end items-center">
           <Button
             type="primary"
-            className="mr-4 text-lg flex items-center justify-center font-semibold"
-            style={{ background: "#296F9D", width: 150, height: 50 }}
+            className="mr-4 text-base flex items-center justify-center font-semibold"
+            style={{ background: "#E7B10A", width: 150, height: 50 }}
             onClick={showDrawer}
           >
             <PlusOutlined />

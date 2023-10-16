@@ -22,7 +22,7 @@ const WorkingSites = () => {
           <Button
             type="primary"
             className="mr-4 text-base flex items-center justify-center font-semibold"
-            style={{ background: "#296F9D", width: 150, height: 50 }}
+            style={{ background: "#E7B10A", width: 150, height: 50 }}
             onClick={showDrawer}
           >
             <PlusOutlined />

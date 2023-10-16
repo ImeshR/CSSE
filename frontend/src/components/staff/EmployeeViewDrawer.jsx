@@ -49,7 +49,7 @@ const EmployeeViewDrawer = ({ visible, onClose, EmployeeData }) => {
         <div className="w-full border px-4 py-4 flex flex-row justify-between">
           <Button
             type="primary"
-            style={{ background: "#296F9D", width: 200, height: 50 }}
+            style={{ background: "#E7B10A", width: 200, height: 50 }}
             className="text-lg flex justify-center items-center"
           >
             Edit
@@ -57,7 +57,7 @@ const EmployeeViewDrawer = ({ visible, onClose, EmployeeData }) => {
           <Button
             type="primary"
             danger
-            style={{ background: "#FF4D4F", width: 200, height: 50 }}
+            style={{ background: "#232D3F", width: 200, height: 50 }}
             className="text-lg flex justify-center items-center"
             onClick={showDeleteModal}
           >

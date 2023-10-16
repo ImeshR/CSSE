@@ -84,7 +84,7 @@ const EmployeeCreateForm = ({ onClose }) => {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ background: "#296F9D", width: 150, height: 50 }}
+            style={{ background: "#E7B10A", width: 150, height: 50 }}
             className="text-base"
           >
             Create Employee

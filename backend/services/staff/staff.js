@@ -94,3 +94,38 @@ export const getSite = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+//get pending orders 
+export const getPendingOrders = async (req, res) => {
+  try {
+    const pendingOrders = await StaffPendingOrder.find();
+    res.status(200).json(pendingOrders);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+//update order status
+export const updateOrderStatus = async (req, res) => {
+  const id = req.params.id;
+  const status = "approved";
+  try {
+    await StaffPendingOrder.findByIdAndUpdate(id, { status: status }).exec();
+    res.status(200).json("Order status updated.");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//change order status in to declined
+export const deleteOrder = async (req, res) => {
+  const id = req.params.id;
+  const status = "declined";
+
+  try {
+    await StaffPendingOrder.findByIdAndUpdate(id, { status: status }).exec();
+    res.status(200).json("Order status updated.");
+  } catch (error) {
+    console.log(error);
+  }
+};

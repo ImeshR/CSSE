@@ -58,7 +58,7 @@ const PendingOrderTable = () => {
           <Button
             type="primary"
             onClick={() => handleAcceptPayment(record)}
-            style={{ background: "#296F9D" }}
+            style={{ background: "#E7B10A" }}
           >
             Accept Payment
           </Button>
